@@ -1,0 +1,61 @@
+@model PostViewModel
+
+@{
+
+}
+<link href="~/lib/Trumbowyg-main/dist/ui/trumbowyg.min.css" rel="stylesheet"/>
+<section class="panel__edit section">
+    <div class="edit__container">
+        <h1 class="section__title title__container">Create or edit a new post over here:</h1>
+        <form class="edit__form grid" asp-controller="Panel" asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input asp-for="Id" type="hidden">
+            <div class="edit__inputs edit__grid">
+                <div class="sign__in_content">
+                    <label class="edit__label">Title</label>
+                    <input class="edit__input" asp-for="Title">
+                </div>
+                <div class="sign__in_content">
+                    <label class="edit__label">Description</label>
+                    <input class="edit__input" asp-for="Description">
+                </div>
+                <div class="sign__in_content">
+                    <label class="edit__label">Tags</label>
+                    <input class="edit__input" asp-for="Tags">
+                </div>
+                <div class="sign__in_content">
+                    <label class="edit__label">Category</label>
+                    <select class="edit__input" asp-for="Category">
+                        <option value="Programming">Programming</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="WorkoutAndRunning">Workout and running</option>
+                    </select>
+                </div>
+                <div class="sign__in_content">
+                    <label class="edit__label">Body</label>
+                    <textarea id="editor" asp-for="Body"></textarea>
+                </div>
+                <div class="sign__in_content">
+                    <label class="edit__label">Image</label>
+                    <input class="edit__input" asp-for="CurrentImage" type="hidden">
+                    <input class="edit__input" asp-for="Image">
+                </div>
+                <div>
+                    <button type="submit" value="Submit" class="button--flex button">
+                        <i class="uil uil-plus"></i> Update or create post
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section scripts {
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="~/lib/Trumbowyg-main/dist/trumbowyg.js"></script>
+    <script>
+        $('#editor').trumbowyg();
+        // . - class
+        // # - id
+        // nav - html element
+    </script>
+}

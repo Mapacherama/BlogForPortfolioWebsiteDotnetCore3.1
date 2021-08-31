@@ -1,0 +1,30 @@
+@model Post
+
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.Description = Model.Description;
+    ViewBag.Keywords = $"{Model.Tags?.Replace(","," ")} {Model.Category}";
+}
+<section class="home section" id="home">
+    <div class="home__container container flex">
+        <h2 class="section__title title__container">@Model.Title</h2>
+
+        <div class="home__flex">
+            <div class="margin-bottom">
+                @if (!String.IsNullOrEmpty(Model.Image))
+                {
+                    var image_path = $"/Image/{Model.Image}";
+                    <img class="home__img" src="@image_path"/>
+                }
+
+                @if (String.IsNullOrEmpty(Model.Image))
+                {
+                    <span> </span>
+                }
+                <p class="home__post__description">
+                    @Html.Raw(Model.Body)
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

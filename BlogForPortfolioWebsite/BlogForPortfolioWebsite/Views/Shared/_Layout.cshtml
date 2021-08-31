@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.Description"/>
+    <meta name="keywords" content="@ViewBag.Keywords"/>
+    <link href="~/css/styles.css" rel="stylesheet">
+    <!--==================== UNICONS ====================-->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+<body>
+<header class="header">
+    <nav class="nav container">
+        <div>
+            <a asp-controller="Home" asp-action="Index" class="nav__logo">Mapacherama<span class="trademark">™</span></a>
+        </div>
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list grid">
+                <li class="nav__item">
+                    <a class="nav__link" asp-controller="Home" asp-action="Index">
+                        <i class="uil uil-home nav__icon"></i> Home
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" asp-controller="Home" asp-action="Index" asp-route-category="Programming">
+                        <i class="uil uil-brackets-curly nav__icon"></i> Programming
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" asp-controller="Panel" asp-action="Index">
+                        <i class="uil uil-panel-add nav__icon"></i> Admin Panel
+                    </a>
+                </li>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav__item">
+                        <a class="nav__link" asp-controller="Auth" asp-action="Logout">
+                            <i class="uil uil-sign-out-alt nav__icon"></i> Logout, or Sign out over here!
+                        </a>
+                        <i class="uil uil-times nav__close" id="nav-close"></i>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav__item">
+                        <a class="nav__link" asp-controller="Auth" asp-action="Login">
+                            <i class="uil uil-sign-in-alt nav__icon"></i> Login, or Sign in over here!
+                        </a>
+                        <i class="uil uil-times nav__close" id="nav-close"></i>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="nav__btns">
+            <i class="uil uil-moon change-theme" id="theme-button"></i>
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="uil uil-apps"></i>
+            </div>
+        </div>
+    </nav>
+</header>
+<div>
+    @RenderBody()
+</div>
+@await RenderSectionAsync("scripts", false)
+<script src="~/js/main.js"></script>
+</body>
+</html>
