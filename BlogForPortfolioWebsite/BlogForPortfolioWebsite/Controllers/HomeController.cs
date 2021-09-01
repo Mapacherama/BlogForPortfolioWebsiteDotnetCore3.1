@@ -1,6 +1,7 @@
 using System;
 using BlogForPortfolioWebsite.Data.FileManager;
 using BlogForPortfolioWebsite.Data.Repository;
+using BlogForPortfolioWebsite.Models.Comments;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogForPortfolioWebsite.Controllers
@@ -15,6 +16,7 @@ namespace BlogForPortfolioWebsite.Controllers
         {
             _repo = repo;
             _fileManager = fileManager;
+            var comment = new Maincomment();
         }
 
         public IActionResult Index(string category) =>
@@ -33,6 +35,7 @@ namespace BlogForPortfolioWebsite.Controllers
         }
 
         [HttpGet("/Image/{image}")]
+        [ResponseCache(CacheProfileName = "Monthly")]
         public IActionResult Image(string image) => new FileStreamResult(_fileManager.ImageStream(image),
             $"image/{image.Substring(image.LastIndexOf('.') + 1)}");
 

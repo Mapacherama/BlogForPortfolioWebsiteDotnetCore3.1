@@ -6,7 +6,12 @@
     <title>@ViewBag.Title</title>
     <meta name="description" content="@ViewBag.Description"/>
     <meta name="keywords" content="@ViewBag.Keywords"/>
+    <enviroment include="Development">
     <link href="~/css/styles.css" rel="stylesheet">
+    </enviroment>
+    <enviroment include="Production">
+    <link href="~/css/styles.min.css" rel="stylesheet">
+    </enviroment>
     <!--==================== UNICONS ====================-->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 </head>
