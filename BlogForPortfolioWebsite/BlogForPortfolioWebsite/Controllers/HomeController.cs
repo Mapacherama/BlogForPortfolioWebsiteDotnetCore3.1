@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using BlogForPortfolioWebsite.Data.FileManager;
 using BlogForPortfolioWebsite.Data.Repository;
 using BlogForPortfolioWebsite.Models.Comments;
+using BlogForPortfolioWebsite.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogForPortfolioWebsite.Controllers
@@ -16,7 +19,6 @@ namespace BlogForPortfolioWebsite.Controllers
         {
             _repo = repo;
             _fileManager = fileManager;
-            var comment = new Maincomment();
         }
 
         public IActionResult Index(string category) =>
@@ -38,6 +40,40 @@ namespace BlogForPortfolioWebsite.Controllers
         [ResponseCache(CacheProfileName = "Monthly")]
         public IActionResult Image(string image) => new FileStreamResult(_fileManager.ImageStream(image),
             $"image/{image.Substring(image.LastIndexOf('.') + 1)}");
+        
+        [HttpPost]
+        public async Task<IActionResult> Comment(CommentViewModel vm)
+        {
+            if (!ModelState.IsValid)
+                return Post(vm.PostId);
+
+            var post = _repo.GetPost(vm.PostId);
+            if (vm.MainCommentId > 0)
+            {
+                post.MainComments ??= new List<MainComment>();
+                
+                post.MainComments.Add(new MainComment
+                {
+                    Message  = vm.Message,
+                    Created = DateTime.Now
+                });
+                
+                _repo.UpdatePost(post);
+            }
+            else
+            {
+                var comnew = new SubComment
+                {
+                    MainCommentId = vm.MainCommentId,
+                    Message = vm.Message,
+                    Created = DateTime.Now
+                };
+            }
+
+            await _repo.SaveChangesAsync();
+
+            return View();
+        }
 
         /*public IActionResult Index(string category)
         {

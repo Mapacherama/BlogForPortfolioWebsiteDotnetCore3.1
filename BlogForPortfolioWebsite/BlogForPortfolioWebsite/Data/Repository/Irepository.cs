@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BlogForPortfolioWebsite.Models;
+using BlogForPortfolioWebsite.Models.Comments;
 
 namespace BlogForPortfolioWebsite.Data.Repository
 {
@@ -12,6 +13,7 @@ namespace BlogForPortfolioWebsite.Data.Repository
         void AddPost(Post post);
         void UpdatePost(Post post);
         void RemovePost(int id);
+        void AddSubComment(SubComment comment);
 
         Task<bool> SaveChangesAsync();
     }
