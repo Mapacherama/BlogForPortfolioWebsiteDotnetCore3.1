@@ -4,6 +4,6 @@ namespace BlogForPortfolioWebsite.Models.Comments
 {
     public class MainComment: Comment
     {
-        public List<SubComment> Subcomments { get; set; }
+        public List<SubComment> SubComments { get; set; }
     }
 }

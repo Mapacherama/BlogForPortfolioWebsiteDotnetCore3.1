@@ -45,10 +45,10 @@ namespace BlogForPortfolioWebsite.Controllers
         public async Task<IActionResult> Comment(CommentViewModel vm)
         {
             if (!ModelState.IsValid)
-                return Post(vm.PostId);
+                return RedirectToAction("Post", new { id = vm.PostId });
 
             var post = _repo.GetPost(vm.PostId);
-            if (vm.MainCommentId > 0)
+            if (vm.MainCommentId == 0)
             {
                 post.MainComments ??= new List<MainComment>();
                 
@@ -68,11 +68,12 @@ namespace BlogForPortfolioWebsite.Controllers
                     Message = vm.Message,
                     Created = DateTime.Now
                 };
+                _repo.AddSubComment(comnew);
             }
 
             await _repo.SaveChangesAsync();
 
-            return View();
+            return RedirectToAction("Post", new {id = vm.PostId});
         }
 
         /*public IActionResult Index(string category)

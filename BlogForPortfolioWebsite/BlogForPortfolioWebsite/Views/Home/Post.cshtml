@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = Model.Title;
     ViewBag.Description = Model.Description;
-    ViewBag.Keywords = $"{Model.Tags?.Replace(","," ")} {Model.Category}";
+    ViewBag.Keywords = $"{Model.Tags?.Replace(",", " ")} {Model.Category}";
 }
 <section class="home section" id="home">
     <div class="home__container container flex">
@@ -26,7 +26,29 @@
                 </p>
             </div>
             <div>
-                @Html.RenderPartial()
+                @* TODO STYLING *@
+                @{
+                    await Html.RenderPartialAsync("_MainComment", new CommentViewModel {PostId = Model.Id, MainCommentId = 0});
+                }
+                @foreach (var c in Model.MainComments)
+                {
+                    <p>
+                        @c.Message --- @c.Created
+                    </P>
+                    <div>
+                        <h4> Sub Comments </h4>
+                        @{
+                            await Html.RenderPartialAsync("_MainComment", new CommentViewModel {PostId = Model.Id, MainCommentId = c.Id});
+                        }
+
+                        @foreach (var sc in c.SubComments)
+                        {
+                            <p>
+                                @sc.Message --- @sc.Created
+                            </P>
+                        }
+                    </div>
+                }
             </div>
         </div>
     </div>
